@@ -72,7 +72,7 @@ int64_t NearestNeighborFrame::get_frame_height() const {
   return frameHeight_;
 }
 
-class convert_rgba_to_rgb {
+class convert_rgba_to_bgr {
  public:
   void operator()(
       const boost::gil::rgba8c_pixel_t &src,
@@ -147,7 +147,7 @@ void NearestNeighborFrame::sliceFrame() {
                                   raw_compressed_bytes_size_ / 1024 << "kb";
   }
 
-  boost::gil::copy_and_convert_pixels(gil, rgbView, convert_rgba_to_rgb());
+  boost::gil::copy_and_convert_pixels(gil, rgbView, convert_rgba_to_bgr());
   data_ = compressor_->compress(rgbView, &size_);
   BOOST_LOG_TRIVIAL(debug) << " frame size: " << size_ / 1024 << "kb";
   free(buf);
